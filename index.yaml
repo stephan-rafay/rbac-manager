@@ -1,3 +1,14 @@
 apiVersion: v1
-entries: {}
-generated: "2023-09-18T11:31:17.835347-07:00"
+entries:
+  rbacmanager:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2023-09-18T11:42:14.576135-07:00"
+    description: A Helm chart for Kubernetes RBACPolicy CRD
+    digest: cc6f4d43455bc7e0840383d3ca5a1e951ca59ff809d2453f200ab2961355401d
+    name: rbacmanager
+    type: application
+    urls:
+    - rbacmanager-0.1.0.tgz
+    version: 0.1.0
+generated: "2023-09-18T11:42:14.574397-07:00"
