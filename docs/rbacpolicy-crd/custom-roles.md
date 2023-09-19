@@ -1,6 +1,6 @@
 # Custom Roles
 
-Preset roles in rbac-manager are designed for ease and efficiency, providing predefined access controls for common use cases. However, custom roles become your go-to solution when your access control requirements demand specificity. It allows you to define access rules with exceptional precision. Whether it's read or write access, resource-specific permissions, or complex scenarios, custom roles give you complete control over who can do what within your Kubernetes clusters. The following capabilities provide you with the precision and flexibility you need to craft access policies that align perfectly with your requirements:
+Preset roles in rbac-manager are designed for ease and efficiency, providing predefined access controls for common use cases. However, custom roles become your go-to solution when your access control requirements demand specificity. It allows you to define access rules with exceptional precision. Whether it's read or write access, resource-specific permissions, or complex scenarios, custom roles give you complete control over who can do what within your Kubernetes clusters. The following capabilities provide you with the flexibility you need to craft access policies that align perfectly with your requirements:
 
 ### **denyResources:**&#x20;
 
@@ -48,8 +48,6 @@ kubectl get clusterrolebinding -l rbac-manager=k8smgmt
 When you run the above commands, you'll witness rbac-manager's remarkable capability in action. It automatically identifies and includes all available resources within the cluster while crafting a ClusterRole that encompasses whitelisting rules for each resource. It's important to note that it excludes the `secret` resource, thus ensuring a comprehensive access policy.&#x20;
 
 The alternative of manually crafting such extensive YAML specifications for RBAC can be daunting and error-prone. rbac-manager streamlines this process, making complex access control manageable and accurate, ultimately enhancing the security and manageability of your Kubernetes environment.
-
-
 
 ***
 
@@ -101,8 +99,6 @@ kubectl get clusterrolebinding -l rbac-manager=k8smgmt
 ```
 {% endhint %}
 
-
-
 ***
 
 ### **allowedGroups:**&#x20;
@@ -151,8 +147,6 @@ kubectl get clusterrolebinding -l rbac-manager=k8smgmt
 ```
 {% endhint %}
 
-
-
 ***
 
 ### **allowedVerbs:**&#x20;
@@ -183,3 +177,78 @@ Below is a list of available verbs.
   - get
   - watch
 ```
+
+***
+
+In the example provided, you've witnessed how rbac-manager utilizes `customClusterRoles` to create ClusterRole resources. However, rbac-manager offers another powerful feature, `customRoles`which allows you to create Role resources in response to the CRD. Let's explore more.
+
+Imagine a scenario where you need to grant users access to manage all resources in specific API groups while denying access to `secrets` and `services`. You can achieve this with a Custom Resource Definition (CRD) like the one below:
+
+```yaml
+apiVersion: rbac-manager.k8smgmt.io/v1
+kind: RBACPolicy
+metadata:
+  name: tc010-custom-rbac
+spec:
+  version: 1.0.0
+  namespaceCreatePolicy: "IfNotPresent"
+  customRoles:
+    - name: edit-role
+      namespaceSelector:
+        matchLabels:
+          key1: value1
+      allowedVerbs:
+        - "*" # All verbs
+      denyResources:
+        - services
+        - secrets
+      allowedGroups:
+        - ""
+        - events.k8s.io
+        - apps
+        - networking.k8s.io
+  customRbacBindings:
+    - name: bind-robot-sa
+      subjects:
+        - kind: ServiceAccount
+          namespace: app
+          name: robot
+      roleBindings:
+        - clusterRole: edit-role
+          namespaceSelector:
+            matchLabels:
+              key1: value1
+```
+
+In this CRD, you define a `customRole` named `edit-role` with specific access controls based on a `namespaceSelector`. This role grants all verbs for resources within specific API groups while denying access to `services` and `secrets`. The `customRbacBindings` section binds this role to the `ServiceAccount` named `robot` within the `app` namespace.
+
+**Automatic Creation of Roles and RoleBindings**
+
+Here's where rbac-manager shines: It automatically generates Roles and RoleBindings in all existing namespaces that match the `namespaceSelector`. To inspect these created resources, you can use the following commands:
+
+```shell
+kubectl get role -A -l rbac-manager=k8smgmt
+kubectl get rolebinding -A -l rbac-manager=k8smgmt
+```
+
+Furthermore, any future namespace created with the label `key1: value1` will automatically receive the corresponding Role and RoleBinding. To confirm this, you can create a new namespace with this label:
+
+```yaml
+yamlCopy codeapiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    key1: value1
+  name: example-new-namespace
+```
+
+Then, inspect the Role and RoleBinding in the newly created namespace:
+
+```shell
+kubectl get role -n example-new-namespace
+kubectl get rolebinding -n example-new-namespace
+```
+
+rbac-manager simplifies and automates the management of access control in Kubernetes, ensuring that your policies remain consistent and effective across both existing and future namespaces.
+
+\
