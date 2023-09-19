@@ -130,8 +130,7 @@ kubectl get crd rbacpolicies.rbac-manager.k8smgmt.io
 
 #### **Step 5: Configure RBAC Policies**
 
-Now that rbac-manager is installed, you can create RBAC policies using the RBACPolicy custom resource. Let's use a preset role named \
-for verification for a quick demonstration. This role would give cluster-wide read access to all resources. &#x20;
+Now that rbac-manager is installed, you can create RBAC policies using the RBACPolicy custom resource. Let's use a preset role named `SuperAdminRead` for a quick demonstration. This role would give cluster-wide read access to all resources. &#x20;
 
 {% hint style="info" %}
 Change `spec.customRbacBindings.subjects`
