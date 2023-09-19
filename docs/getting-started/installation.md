@@ -54,6 +54,8 @@ Now, you can install rbac-manager using Helm.&#x20;
 </strong>--create-namespace --namespace rbac-manager-system
 </code></pre>
 
+#### **Advanced Installation Options**
+
 _You can customize the installation by providing a `values.yaml`file with your desired settings._&#x20;
 
 ```bash
@@ -154,7 +156,17 @@ spec:
 
 Apply the above CRD to your cluster using `kubectl apply` command
 
-Check the following `clusterrole` and `clusterrolebindings` are created in the cluster.
+Check that the CRD is applied.
+
+<pre class="language-bash"><code class="lang-bash"><strong>kubectl get rbacpolicy
+</strong></code></pre>
+
+```bash
+NAME                     AGE
+example001-preset-rbac   167m
+```
+
+Please verify that the following items have been created in the cluster:
 
 ```
 kubectl get clusterrole -l rbac-manager=k8smgmt
