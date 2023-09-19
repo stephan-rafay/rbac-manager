@@ -1,0 +1,59 @@
+apiVersion: rbac-manager.k8smgmt.io/v1
+kind: RBACPolicy
+metadata:
+  labels:
+    app.kubernetes.io/name: rbacpolicy
+    app.kubernetes.io/instance: rbacpolicy-sample
+    app.kubernetes.io/part-of: rbac-manager
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: rbac-manager
+  name: tc002-native-role
+spec:
+  version: 1.0.0
+  namespaceCreatePolicy: "IfNotPresent" # (or) "Never"
+  roles:
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: Role
+      metadata:
+        name: r-secret-reader
+        namespace: default
+      rules:
+      - apiGroups: [""] # "" indicates the core API group
+        resources: ["secrets"]
+        verbs: ["get", "watch", "list"]
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: Role
+      metadata:
+        name: r-secret-writer
+        namespace: default
+      rules:
+      - apiGroups: [""] # "" indicates the core API group
+        resources: ["secrets"]
+        verbs: [ "get", "watch", "list", create, update, patch, delete]
+  roleBindings:
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: read-secrets-robot
+        namespace: default
+      subjects:
+      - kind: ServiceAccount
+        namespace: app
+        name: tc002-robot-reader
+      roleRef:
+        kind: Role
+        name: r-secret-reader
+        apiGroup: rbac.authorization.k8s.io
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: write-secrets-robot
+        namespace: default
+      subjects:
+      - kind: ServiceAccount
+        namespace: app
+        name: tc002-robot-writer
+      roleRef:
+        kind: Role
+        name: r-secret-writer
+        apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,28 @@
+apiVersion: rbac-manager.k8smgmt.io/v1
+kind: RBACPolicy
+metadata:
+  labels:
+    app.kubernetes.io/name: rbacpolicy
+    app.kubernetes.io/instance: rbacpolicy-sample
+    app.kubernetes.io/part-of: rbac-manager
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: rbac-manager
+  name: tc014-preset-rbac
+spec:
+  version: 1.0.0
+  namespaceCreatePolicy: "IfNotPresent" # (or) "Never"
+  customRbacBindings:
+    - name: appadmin
+      subjects:
+        - kind: ServiceAccount
+          namespace: app
+          name: robot
+      presetBindings:
+        - roleName: NameSpaceAdmin
+          namespaceSelector:
+            matchLabels:
+              key1: value1
+            matchExpressions:
+              - {key: name, operator: In, values: [payroll, web]}
+              - {key: environment, operator: NotIn, values: [dev]}
+            

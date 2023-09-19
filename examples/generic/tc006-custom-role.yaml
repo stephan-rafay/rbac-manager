@@ -1,0 +1,184 @@
+apiVersion: rbac-manager.k8smgmt.io/v1
+kind: RBACPolicy
+metadata:
+  labels:
+    app.kubernetes.io/name: rbacpolicy
+    app.kubernetes.io/instance: tc006-custom-role
+    app.kubernetes.io/part-of: rbac-manager
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: rbac-manager
+  name: tc006-custom-role
+spec:
+  version: 1.0.0
+  namespaceCreatePolicy: "IfNotPresent" # (or) "Never"
+  customRoles:
+    - name: edit
+      namespaceSelector:
+        matchLabels:
+          key1: value1
+        matchExpressions:
+          - {key: name, operator: In, values: [payroll, web]}
+          - {key: environment, operator: NotIn, values: [dev]}
+      shared: false
+      denyResources:
+        - services
+        - secrets
+      allowedVerbs:
+        - get
+        - list
+        - watch
+        - create
+        - update
+        - patch
+        - delete
+      allowedGroups:
+        - ""
+        - admissionregistration.k8s.io
+        - storage.k8s.io
+        - networking.k8s.io
+---
+# Equivalent to: 
+# rbac-tool gen 
+#  --generated-type=Role \
+#  --allowed-verbs=get,list,watch,create,update,patch,delete
+#  --allowed-groups=,admissionregistration.k8s.io,storage.k8s.io,networking.k8s.io
+#  --deny-resources=secrets.,services.
+#  -- Generate Below YAML --
+---
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: Role
+# metadata:
+#   labels:
+#     rbac-manager: k8smgmt
+#   name: tc006-custom-role-edit
+#   namespace: payroll-notdev
+# rules:
+# - apiGroups:
+#   - ""
+#   resources:
+#   - configmaps
+#   - endpoints
+#   - resourcequotas
+#   - serviceaccounts
+#   - pods
+#   - events
+#   - podtemplates
+#   - limitranges
+#   - replicationcontrollers
+#   - bindings
+#   - persistentvolumeclaims
+#   verbs:
+#   - create
+#   - delete
+#   - get
+#   - list
+#   - patch
+#   - update
+#   - watch
+# - apiGroups:
+#   - networking.k8s.io
+#   resources:
+#   - ingresses
+#   - networkpolicies
+#   verbs:
+#   - create
+#   - delete
+#   - get
+#   - list
+#   - patch
+#   - update
+#   - watch
+# - apiGroups:
+#   - storage.k8s.io
+#   resources:
+#   - csistoragecapacities
+#   verbs:
+#   - create
+#   - delete
+#   - get
+#   - list
+#   - patch
+#   - update
+#   - watch
+# - apiGroups:
+#   - admissionregistration.k8s.io
+#   resources:
+#   - validatingwebhookconfigurations
+#   - mutatingwebhookconfigurations
+#   verbs:
+#   - create
+#   - delete
+#   - get
+#   - list
+#   - patch
+#   - update
+#   - watch
+# ---
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: Role
+# metadata:
+#   labels:
+#     rbac-manager: k8smgmt
+#   name: tc006-custom-role-edit
+#   namespace: web-notdev
+# rules:
+# - apiGroups:
+#   - ""
+#   resources:
+#   - configmaps
+#   - endpoints
+#   - resourcequotas
+#   - serviceaccounts
+#   - pods
+#   - events
+#   - podtemplates
+#   - limitranges
+#   - replicationcontrollers
+#   - bindings
+#   - persistentvolumeclaims
+#   verbs:
+#   - create
+#   - delete
+#   - get
+#   - list
+#   - patch
+#   - update
+#   - watch
+# - apiGroups:
+#   - networking.k8s.io
+#   resources:
+#   - ingresses
+#   - networkpolicies
+#   verbs:
+#   - create
+#   - delete
+#   - get
+#   - list
+#   - patch
+#   - update
+#   - watch
+# - apiGroups:
+#   - storage.k8s.io
+#   resources:
+#   - csistoragecapacities
+#   verbs:
+#   - create
+#   - delete
+#   - get
+#   - list
+#   - patch
+#   - update
+#   - watch
+# - apiGroups:
+#   - admissionregistration.k8s.io
+#   resources:
+#   - validatingwebhookconfigurations
+#   - mutatingwebhookconfigurations
+#   verbs:
+#   - create
+#   - delete
+#   - get
+#   - list
+#   - patch
+#   - update
+#   - watch

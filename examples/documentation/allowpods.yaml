@@ -1,0 +1,26 @@
+apiVersion: rbac-manager.k8smgmt.io/v1
+kind: RBACPolicy
+metadata:
+  name: tc008-custom-rbac
+spec:
+  version: 1.0.0
+  namespaceCreatePolicy: "IfNotPresent"
+  customClusterRoles:
+   - name: allow-pods
+     allowedResources:
+       - pods
+       - pods/exec
+       - pods/log
+       - pods/status
+       - pods/portforward
+       - pods/proxy
+     allowedVerbs:
+       - "*"    # for other resources
+  customRbacBindings:
+    - name: bind-robot-sa
+      subjects:
+        - kind: ServiceAccount
+          namespace: app
+          name: robot
+      clusterRoleBindings:
+        - clusterRole: allow-pods

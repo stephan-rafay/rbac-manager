@@ -1,0 +1,117 @@
+apiVersion: rbac-manager.k8smgmt.io/v1
+kind: RBACPolicy
+metadata:
+  labels:
+    app.kubernetes.io/name: rbacpolicy
+    app.kubernetes.io/instance: tc004-custom-cr
+    app.kubernetes.io/part-of: rbac-manager
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: rbac-manager
+  name: tc004-custom-cr
+spec:
+  version: 1.0.0
+  namespaceCreatePolicy: "IfNotPresent" # (or) "Never"
+  customClusterRoles:
+    - name: edit
+      shared: false
+      denyResources:
+        - services
+        - secrets
+      allowedVerbs:
+        - get
+        - list
+        - watch
+        - create
+        - update
+        - patch
+        - delete
+      allowedGroups:
+        - ""
+        - admissionregistration.k8s.io
+        - storage.k8s.io
+        - networking.k8s.io
+---
+# Equivalent to: 
+# rbac-tool gen 
+#  --generated-type=ClusterRole \
+#  --allowed-verbs=get,list,watch,create,update,patch,delete
+#  --allowed-groups=,admissionregistration.k8s.io,storage.k8s.io,networking.k8s.io
+#  --deny-resources=secrets.,services.
+#  -- Generate Below YAML --
+---
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: ClusterRole
+# metadata:
+#   labels:
+#     rbac-manager: k8smgmt
+#   name: tc004-custom-cr-edit
+# rules:
+# - apiGroups:
+#   - ""
+#   resources:
+#   - configmaps
+#   - endpoints
+#   - resourcequotas
+#   - serviceaccounts
+#   - pods
+#   - events
+#   - namespaces
+#   - podtemplates
+#   - limitranges
+#   - persistentvolumes
+#   - componentstatuses
+#   - nodes
+#   - replicationcontrollers
+#   - bindings
+#   - persistentvolumeclaims
+#   verbs:
+#   - create
+#   - delete
+#   - get
+#   - list
+#   - patch
+#   - update
+#   - watch
+# - apiGroups:
+#   - networking.k8s.io
+#   resources:
+#   - ingressclasses
+#   - ingresses
+#   - networkpolicies
+#   verbs:
+#   - create
+#   - delete
+#   - get
+#   - list
+#   - patch
+#   - update
+#   - watch
+# - apiGroups:
+#   - storage.k8s.io
+#   resources:
+#   - csidrivers
+#   - csistoragecapacities
+#   - volumeattachments
+#   - csinodes
+#   - storageclasses
+#   verbs:
+#   - create
+#   - delete
+#   - get
+#   - list
+#   - patch
+#   - update
+#   - watch
+# - apiGroups:
+#   - admissionregistration.k8s.io
+#   resources:
+#   - validatingwebhookconfigurations
+#   - mutatingwebhookconfigurations
+#   verbs:
+#   - create
+#   - delete
+#   - get
+#   - list
+#   - patch
+#   - update
+#   - watch

@@ -1,0 +1,24 @@
+apiVersion: rbac-manager.k8smgmt.io/v1
+kind: RBACPolicy
+metadata:
+  name: tc009-custom-rbac
+spec:
+  version: 1.0.0
+  namespaceCreatePolicy: "IfNotPresent"
+  customClusterRoles:
+   - name: allow-groups
+     allowedVerbs:
+       - "*"    # for other resources
+     allowedGroups:
+        - ""
+        - events.k8s.io
+        - apps
+        - networking.k8s.io
+  customRbacBindings:
+    - name: bind-robot-sa
+      subjects:
+        - kind: ServiceAccount
+          namespace: app
+          name: robot
+      clusterRoleBindings:
+        - clusterRole: allow-groups

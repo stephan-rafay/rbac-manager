@@ -1,0 +1,22 @@
+apiVersion: rbac-manager.k8smgmt.io/v1
+kind: RBACPolicy
+metadata:
+  labels:
+    app.kubernetes.io/name: rbacpolicy
+    app.kubernetes.io/instance: tc009-custom-cr
+    app.kubernetes.io/part-of: rbac-manager
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: rbac-manager
+  name: tc009-fullaccess
+spec:
+  version: 1.0.0
+  namespaceCreatePolicy: "IfNotPresent" # (or) "Never"
+  customClusterRoles:
+    - name: admin
+      shared: false
+      allowedVerbs:
+        - '*'
+---
+# Equivalent to: 
+# rbac-tool show --scope=all 
+---
