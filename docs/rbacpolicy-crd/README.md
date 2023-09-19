@@ -21,7 +21,9 @@ RBACPolicy CRD simplifies RBAC management by offering a selection of preset role
 
 While the Preset roles offer convenience and simplicity, the rbac-manager's custom role capability empowers you to craft RBAC rules to meet your specific needs. The most flexible feature of rbac-manager is the ability to create custom roles, granting you the utmost control over fine-grained access rules without the need for complex RBAC whitelisting configuration.
 
+#### **Seamless Integration of Existing RBAC Rules**
 
+rbac-manager goes the extra mile to simplify RBAC management by offering support for seamlessly integrating your existing Kubernetes RBAC rules into the RBACPolicy CRD. This feature is invaluable for organizations looking to migrate their current RBAC definitions into rbac-manager's streamlined access control framework.
 
-<pre class="language-yaml"><code class="lang-yaml"><strong>denyResources
-</strong></code></pre>
+By enabling you to retain your existing RBAC configurations, rbac-manager ensures a smooth transition and preserves your established access control policies. This capability enhances the versatility and adaptability of rbac-manager, making it a powerful tool for both managing existing setups and implementing new access controls.
+
