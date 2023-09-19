@@ -8,8 +8,6 @@ description: >-
 
 ### **Before You Begin**
 
-
-
 Before diving into the installation and configuration of rbac-manager, please make sure you've reviewed the following points:
 
 #### **Kubernetes Cluster:**
@@ -34,7 +32,7 @@ To install rbac-manager using Helm, you can follow these steps. Ensure you have 
 
 #### **Step 1: Add the rbac-manager Helm Repository**
 
-You'll need to add the rbac-manager Helm repository to Helm using the following command:
+You'll need to add the rbac-manager Helm repository using the following command:
 
 ```bash
 helm repo add rbacmanager https://stephan-rafay.github.io/rbac-manager/
@@ -56,7 +54,7 @@ Now, you can install rbac-manager using Helm.&#x20;
 </strong>--create-namespace --namespace rbac-manager-system
 </code></pre>
 
-You can customize the installation by providing a `values.yaml`file with your desired settings.&#x20;
+_You can customize the installation by providing a `values.yaml`file with your desired settings._&#x20;
 
 ```bash
 helm install rbacmanager-v010 rbacmanager/rbacmanager --version 0.1.0 \
@@ -130,8 +128,136 @@ kubectl get crd rbacpolicies.rbac-manager.k8smgmt.io
 
 #### **Step 5: Configure RBAC Policies**
 
-Now that rbac-manager is installed, you can create RBAC policies using the RBACPolicy custom resource. Refer to the documentation for guidance on creating RBACPolicy resources to define your access control rules.
+Now that rbac-manager is installed, you can create RBAC policies using the RBACPolicy custom resource. For a quick demonstration, let's use a preset role named `SuperAdminRead`for quick verification. This role would give cluster-wide read access to all resources. &#x20;
 
-That's it! You've successfully installed rbac-manager using Helm. You can now start simplifying RBAC policy management in your Kubernetes cluster.&#x20;
+{% hint style="info" %}
+Change the spec.customRbacBindings.subject details&#x20;
+{% endhint %}
+
+````yaml
+```yaml
+apiVersion: rbac-manager.k8smgmt.io/v1
+kind: RBACPolicy
+metadata:
+  name: example001-preset-rbac
+spec:
+  version: 1.0.0
+  customRbacBindings:
+    - name: fullaccess
+      subjects:
+        - kind: ServiceAccount
+          namespace: cluster-admins
+          name: sre-user
+      presetBindings:
+        - roleName: SuperAdminRead
+```
+````
+
+Apply the above CRD to your cluster using `kubectl apply` command
+
+Check the following `clusterrole` and `clusterrolebindings` are created in the cluster.
+
+```
+kubectl get clusterrole -l rbac-manager=k8smgmt
+```
+
+```bash
+NAME                                               CREATED AT
+example001-preset-rbac-fullaccess-SuperAdminRead   2023-09-19T00:20:58Z
+```
+
+***
+
+```
+kubectl get clusterrolebinding -l rbac-manager=k8smgmt
+```
+
+```bash
+NAME                                               ROLE                                                           AGE
+example001-preset-rbac-fullaccess-SuperAdminRead   ClusterRole/example001-preset-rbac-fullaccess-SuperAdminRead   4m51s
+```
+
+***
+
+Inspect the details of the ClusterRole and ClusterRoleBinding to ensure that only read access is granted.
+
+```bash
+kubectl get clusterrole example001-preset-rbac-fullaccess-SuperAdminRead -oyaml
+```
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: "2023-09-19T00:20:58Z"
+  labels:
+    rbac-manager: k8smgmt
+    rbacpolicy-name: example001-preset-rbac
+  name: example001-preset-rbac-fullaccess-SuperAdminRead
+  ownerReferences:
+  - apiVersion: rbac-manager.k8smgmt.io/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: RBACPolicy
+    name: example001-preset-rbac
+    uid: af335adb-30a5-4f04-b387-f6a08906b746
+  resourceVersion: "2959290"
+  uid: 9ce85f08-9fc4-44d4-8ffc-a1bba78936f2
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - watch
+- nonResourceURLs:
+  - '*'
+  verbs:
+  - get
+```
+
+***
+
+```
+kubectl get clusterrolebinding example001-preset-rbac-fullaccess-SuperAdminRead -oyaml
+```
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  creationTimestamp: "2023-09-19T00:20:58Z"
+  labels:
+    rbac-manager: k8smgmt
+    rbacpolicy-name: example001-preset-rbac
+  name: example001-preset-rbac-fullaccess-SuperAdminRead
+  ownerReferences:
+  - apiVersion: rbac-manager.k8smgmt.io/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: RBACPolicy
+    name: example001-preset-rbac
+    uid: af335adb-30a5-4f04-b387-f6a08906b746
+  resourceVersion: "2959291"
+  uid: 45aadf96-e7a9-44e8-814d-19095f7ee123
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: example001-preset-rbac-fullaccess-SuperAdminRead
+subjects:
+- kind: ServiceAccount
+  name: sre-user
+  namespace: cluster-admins
+```
+
+{% hint style="info" %}
+Based on the RBACPolicy CRD, the rbac-manager operator automatically created the necessary ClusterRole and ClusterRoleBinding.
+{% endhint %}
+
+For guidance on creating more RBACPolicy resources to define access control rules, refer to the documentation.
+
+That's it! You've successfully installed rbac-manager using Helm.&#x20;
 
 \
