@@ -134,7 +134,6 @@ Now that rbac-manager is installed, you can create RBAC policies using the RBACP
 Change the spec.customRbacBindings.subject details&#x20;
 {% endhint %}
 
-````yaml
 ```yaml
 apiVersion: rbac-manager.k8smgmt.io/v1
 kind: RBACPolicy
@@ -151,7 +150,6 @@ spec:
       presetBindings:
         - roleName: SuperAdminRead
 ```
-````
 
 Apply the above CRD to your cluster using `kubectl apply` command
 
