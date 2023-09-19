@@ -16,7 +16,3 @@ spec:
       shared: false
       allowedVerbs:
         - '*'
----
-# Equivalent to: 
-# rbac-tool show --scope=all 
----
