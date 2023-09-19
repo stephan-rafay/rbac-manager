@@ -15,3 +15,4 @@
     * [🔬 NameSpaceRead](rbacpolicy-crd/preset-roles/namespaceread.md)
     * [🧑🚀 NameSpaceWriteRestricted](rbacpolicy-crd/preset-roles/namespacewriterestricted.md)
     * [🔭 NameSpaceReadRestricted](rbacpolicy-crd/preset-roles/namespacereadrestricted.md)
+  * [Custom Roles](rbacpolicy-crd/custom-roles.md)
