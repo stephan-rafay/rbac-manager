@@ -182,7 +182,7 @@ Below is a list of available verbs.
 
 In the example provided, you've witnessed how rbac-manager utilizes `customClusterRoles` to create ClusterRole resources. However, rbac-manager offers another powerful feature, `customRoles`which allows you to create Role resources in response to the CRD. Let's explore more.
 
-Imagine a scenario where you need to grant users access to manage all resources in specific API groups while denying access to `secrets` and `services`. You can achieve this with a Custom Resource Definition (CRD) like the one below:
+Imagine a scenario where you need to grant users access to specific namespaces to manage  resources in specific API groups while denying access to `secrets` and `services`. You can achieve this with a Custom Resource Definition (CRD) like the one below:
 
 ```yaml
 apiVersion: rbac-manager.k8smgmt.io/v1
