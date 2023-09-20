@@ -45,7 +45,7 @@ kubectl get clusterrolebinding -l rbac-manager=k8smgmt
 ```
 {% endhint %}
 
-When you run the above commands, you'll witness rbac-manager's remarkable capability in action. It automatically identifies and includes all available resources within the cluster while crafting a ClusterRole that encompasses whitelisting rules for each resource. It's important to note that it excludes the `secret` resource, thus ensuring a comprehensive access policy.&#x20;
+When you run the above commands, you'll witness the rbac-manager's remarkable capability in action. It automatically identifies and includes all available resources within the cluster while crafting a ClusterRole that encompasses whitelisting rules for each resource. It's important to note that it excludes the `secret` resource, thus ensuring a comprehensive access policy.&#x20;
 
 The alternative of manually crafting such extensive YAML specifications for RBAC can be daunting and error-prone. rbac-manager streamlines this process, making complex access control manageable and accurate, ultimately enhancing the security and manageability of your Kubernetes environment.
 
@@ -55,7 +55,7 @@ The alternative of manually crafting such extensive YAML specifications for RBAC
 
 allowedResources enables you to specify the Kubernetes resources that should be granted access. Whether it's pods, services, or other resources, you can define exactly what can be accessed.
 
-#### **Example Use Case: Grant Access To pods**
+#### **Example Use Case: Grant Access To pods.**
 
 Imagine a scenario where you need to grant users access to only manage pods in the cluster. With rbac-manager, achieving this level of control is straightforward. You can create a Custom Resource Definition (CRD) like the one below:
 
@@ -88,7 +88,7 @@ spec:
         - clusterRole: allow-pods
 ```
 
-In this example, the `allow-pods` Custom Cluster Role is configured to grant access to specific `pods` resources and subresources. while denying access to all other resources. This specific binding ensures that the user, represented by the `ServiceAccount` named `robot` in the `app` namespace is only allowed to manage specific resources and subresources in the cluster.
+In this example, the `allow-pods` Custom Cluster Role is configured to grant access to specific `pods` resources and subresources while denying access to all other resources. This specific binding ensures that the user, represented by the `ServiceAccount` named `robot` in the `app` namespace is only allowed to manage specific resources and subresources in the cluster.
 
 {% hint style="info" %}
 Inspect the ClusterRole and ClusterRoleBinding created by rbac-manager for the above CRD using the commands below.&#x20;
@@ -136,7 +136,7 @@ spec:
         - clusterRole: allow-groups
 ```
 
-In this example, the `allow-groups` Custom Cluster Role is configured to grant access to all resources in specific `groups` such as  `core`, `events.k8s.io`, `apps`, `networking.k8s.io`, while denying access to all other resources. This specific binding ensures that the user, represented by the `ServiceAccount` named `robot` in the `app` namespace, is allowed to manage all resources in the above specific groups.
+In this example, the `allow-groups` Custom Cluster Role is configured to grant access to all resources in specific `groups` such as  `core`, `events.k8s.io`, `apps`, `networking.k8s.io`, while denying access to all other resources. This specific binding ensures that the user, represented by the `ServiceAccount` named `robot` in the `app` namespace is allowed to manage all resources in the above specific groups.
 
 {% hint style="info" %}
 Inspect the ClusterRole and ClusterRoleBinding created by rbac-manager for the above CRD using the commands below.&#x20;
@@ -214,7 +214,7 @@ spec:
           namespace: app
           name: robot
       roleBindings:
-        - clusterRole: edit-role
+        - role: edit-role
           namespaceSelector:
             matchLabels:
               key1: value1
@@ -234,7 +234,7 @@ kubectl get rolebinding -A -l rbac-manager=k8smgmt
 Furthermore, any future namespace created with the label `key1: value1` will automatically receive the corresponding Role and RoleBinding. To confirm this, you can create a new namespace with this label:
 
 ```yaml
-yamlCopy codeapiVersion: v1
+apiVersion: v1
 kind: Namespace
 metadata:
   labels:
@@ -249,6 +249,6 @@ kubectl get role -n example-new-namespace
 kubectl get rolebinding -n example-new-namespace
 ```
 
-rbac-manager simplifies and automates the management of access control in Kubernetes, ensuring that your policies remain consistent and effective across both existing and future namespaces.
+rbac-manager simplifies and automates access control management in Kubernetes, ensuring that your policies remain consistent and effective across existing and future namespaces.
 
 \
