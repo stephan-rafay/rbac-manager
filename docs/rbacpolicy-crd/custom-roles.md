@@ -151,7 +151,7 @@ kubectl get clusterrolebinding -l rbac-manager=k8smgmt
 
 ### **allowedVerbs:**&#x20;
 
-rbac-manager allows you to specify Kubernetes resource actions that should be granted access. You can define precisely which actions, such as create, read, update, or delete, are permitted, adding an additional layer of control to your access policies.
+With rbac-manager, you can easily define which actions on Kubernetes resources are permissible. You can specify actions, such as create, read, update, or delete, that are permitted.
 
 Below is a list of available verbs.
 
