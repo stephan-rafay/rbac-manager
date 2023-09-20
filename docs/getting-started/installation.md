@@ -4,9 +4,9 @@ description: >-
   Kubernetes cluster.
 ---
 
-# Installation
+# 🏗 Installation
 
-### **Before You Begin**
+## **Before You Begin**
 
 Before diving into the installation and configuration of rbac-manager, please make sure you've reviewed the following points:
 
@@ -24,11 +24,11 @@ Before diving into the installation and configuration of rbac-manager, please ma
 
 #### **Understanding of RBAC Concepts:**
 
-* Understanding Kubernetes RBAC concepts, such as cluster roles, roles, rolebindings, clusterrolebindings, and service accounts, is beneficial. If you're new to RBAC, consider reading Kubernetes RBAC documentation as a primer.
+* Understanding Kubernetes RBAC concepts, such as cluster roles, roles, rolebindings, clusterrolebindings, and service accounts, is beneficial. If you're new to RBAC, consider reading Kubernetes [RBAC documentation](https://kubernetes.io/docs/reference/access-authn-authz/rbac/) as a primer.
 
-### **Installation using Helm**
+## **Installation using Helm**
 
-To install rbac-manager using Helm, you can follow these steps. Ensure you have Helm installed on your system before proceeding.
+To install rbac-manager using Helm, you can follow these steps. Ensure you have [Helm](https://helm.sh/docs/intro/install/) installed on your system before proceeding.
 
 #### **Step 1: Add the rbac-manager Helm Repository**
 
@@ -63,7 +63,7 @@ helm install rbacmanager-v010 rbacmanager/rbacmanager --version 0.1.0 \
 --create-namespace --namespace rbac-manager-system -f values.yaml
 ```
 
-Replace `values.yaml` with the path to your configuration file if you're using one.&#x20;
+_Replace `values.yaml` with the path to your configuration file if you're using one._&#x20;
 
 {% hint style="info" %}
 To access the details of values, use the following command.
@@ -122,19 +122,16 @@ kubectl logs -f -n rbac-manager-system -l control-plane=controller-manager
 kubectl get crd rbacpolicies.rbac-manager.k8smgmt.io
 ```
 
-> NAME                                                            CREATED AT
->
-> rbacpolicies.rbac-manager.k8smgmt.io     2023-09-18T23:36:46Z
+```bash
+NAME                                    CREATED AT
+rbacpolicies.rbac-manager.k8smgmt.io    2023-09-18T23:36:46Z
+```
 
 ***
 
 #### **Step 5: Configure RBAC Policies**
 
 Now that rbac-manager is installed, you can create RBAC policies using the RBACPolicy custom resource. Let's use a preset role named `SuperAdminRead` for a quick demonstration. This role would give cluster-wide read access to all resources. &#x20;
-
-{% hint style="info" %}
-Change `spec.customRbacBindings.subjects`
-{% endhint %}
 
 ```yaml
 apiVersion: rbac-manager.k8smgmt.io/v1

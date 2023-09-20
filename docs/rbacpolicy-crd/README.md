@@ -1,8 +1,7 @@
 ---
 description: >-
   In this section, we delve deep into the core of rbac-manager, the RBACPolicy
-  CRD. This resource is the linchpin of fine-grained access control within
-  Kubernetes.
+  CRD. This resource is the linchpin of fine-grained access control.
 ---
 
 # RBACPolicy CRD

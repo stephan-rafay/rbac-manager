@@ -25,7 +25,7 @@ spec:
               key1: value1
 ```
 
-The provided YAML snippet represents the specification (spec) for an RBACPolicy, specifically for the "WorkSpaceAdmin" preset role. Let's break down the components of this RBACPolicy CRD spec:
+The provided YAML snippet represents the specification (spec) for an RBACPolicy for the "WorkSpaceAdmin" preset role. Let's break down the components of this RBACPolicy CRD spec:
 
 * `apiVersion` and `kind`: These fields specify the API version and kind of the Custom Resource. In this case, it's an `RBACPolicy` in the `rbac-manager.k8smgmt.io/v1` API version.
 * `metadata`: This section contains metadata about the RBACPolicy resource, including the name.

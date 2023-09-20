@@ -1,6 +1,6 @@
-# Custom Roles
+# 🛃 Custom Roles
 
-Preset roles in rbac-manager are designed for ease and efficiency, providing predefined access controls for common use cases. However, custom roles become your go-to solution when your access control requirements demand specificity. It allows you to define access rules with exceptional precision. Whether it's read or write access, resource-specific permissions, or complex scenarios, custom roles give you complete control over who can do what within your Kubernetes clusters. The following capabilities provide you with the flexibility you need to craft access policies that align perfectly with your requirements:
+Preset roles in rbac-manager are designed for ease and efficiency. However, custom roles become your go-to solution when your access control requirements demand specificity. It allows you to define access rules with exceptional precision. Whether it's read or write access, resource-specific permissions, or complex scenarios, custom roles give you complete control over who can do what within your Kubernetes clusters. The following capabilities provide you with the flexibility you need to craft access policies that align perfectly with your requirements:
 
 ### **denyResources:**&#x20;
 

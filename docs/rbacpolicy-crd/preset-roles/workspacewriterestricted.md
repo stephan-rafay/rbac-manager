@@ -2,7 +2,7 @@
 
 ### **WorkSpaceWriteRestricted:**
 
-This role is suited for users responsible for creating, updating, and deleting namespaces while maintaining read and write access to resources within those namespaces, except for specific exclusions like Service Accounts, Secrets, Roles, RoleBindings, and pods/exec operations.
+This role is for users who create, update, and delete namespaces while maintaining read and write access to resources within those namespaces, with some exclusions like Service Accounts, Secrets, Roles, RoleBindings, and pods/exec operations.
 
 ```yaml
 apiVersion: rbac-manager.k8smgmt.io/v1
@@ -25,7 +25,7 @@ spec:
               key1: value1
 ```
 
-The provided YAML snippet represents the specification (spec) for an RBACPolicy, specifically for the "WorkSpaceWriteRestricted" preset role. Let's break down the components of this RBACPolicy CRD spec:
+The provided YAML snippet represents the specification (spec) for an RBACPolicy for the "WorkSpaceWriteRestricted" preset role. Let's break down the components of this RBACPolicy CRD spec:
 
 * `apiVersion` and `kind`: These fields specify the API version and kind of the Custom Resource. In this case, it's an `RBACPolicy` in the `rbac-manager.k8smgmt.io/v1` API version.
 * `metadata`: This section contains metadata about the RBACPolicy resource, including the name.

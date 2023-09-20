@@ -5,11 +5,11 @@ description: >-
   rbac-manager.
 ---
 
-# Preset Roles
+# 🗃 Preset Roles
 
 ## **What are Preset Roles?**
 
-Preset roles are preconfigured access control roles that cover common use cases and scenarios within Kubernetes. RBACPolicy CRD simplifies RBAC management by offering these ready-made roles, eliminating the need for extensive custom configurations. These roles are designed to promote security best practices while streamlining your access control setup.
+Preset roles are preconfigured access control roles that cover common use cases and scenarios. RBACPolicy CRD simplifies RBAC management by offering these ready-made roles, eliminating the need for extensive custom configurations. These roles are designed to promote security best practices while streamlining your access control setup.
 
 ## **Supported Preset Roles**
 
