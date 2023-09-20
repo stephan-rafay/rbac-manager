@@ -13,7 +13,6 @@ spec:
   namespaceCreatePolicy: "IfNotPresent" # (or) "Never"
   customClusterRoles:
     - name: edit
-      shared: false
       denyResources:
         - services
         - secrets

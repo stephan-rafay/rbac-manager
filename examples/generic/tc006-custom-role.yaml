@@ -19,7 +19,6 @@ spec:
         matchExpressions:
           - {key: name, operator: In, values: [payroll, web]}
           - {key: environment, operator: NotIn, values: [dev]}
-      shared: false
       denyResources:
         - services
         - secrets

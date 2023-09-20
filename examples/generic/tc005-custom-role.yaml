@@ -14,7 +14,6 @@ spec:
   customRoles:
     - name: edit
       namespace: default
-      shared: false
       denyResources:
         - services
         - secrets

@@ -13,6 +13,5 @@ spec:
   namespaceCreatePolicy: "IfNotPresent" # (or) "Never"
   customClusterRoles:
     - name: admin
-      shared: false
       allowedVerbs:
         - '*'
