@@ -17,4 +17,5 @@
     * [🔭 NameSpaceReadRestricted](rbacpolicy-crd/preset-roles/namespacereadrestricted.md)
   * [🛃 Custom Roles](rbacpolicy-crd/custom-roles.md)
   * [🌠 Integration of Existing RBAC Rules](rbacpolicy-crd/integration-of-existing-rbac-rules.md)
+* [Architecture](architecture.md)
 * [Examples](examples.md)
