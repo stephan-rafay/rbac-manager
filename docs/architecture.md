@@ -10,7 +10,7 @@ rbac-manager adheres to the Kubernetes operator design pattern, continuously mon
 
 <figure><img src=".gitbook/assets/Screenshot 2023-09-20 at 10.45.58 PM.png" alt=""><figcaption></figcaption></figure>
 
-By closely aligning with the CRD spec, the rbac-manager dynamically generates corresponding RBAC roles and role bindings, ensuring that access controls remain in harmony with the defined policies. rbac-manager also reconciles RBACPolicy CRDs, Service Accounts, Namespaces, Roles, ClusterRoles, RoleBindings, and ClusterRoleBindings.
+By closely aligning with the CRD spec, the rbac-manager dynamically generates corresponding RBAC roles and role bindings, ensuring that access controls remain in harmony with the defined policies.&#x20;
 
 ### How does rbac-manager create roles?
 
