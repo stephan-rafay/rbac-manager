@@ -140,6 +140,7 @@ metadata:
   name: example001-preset-rbac
 spec:
   version: 1.0.0
+  namespaceCreatePolicy: "IfNotPresent"
   customRbacBindings:
     - name: fullaccess
       subjects:
